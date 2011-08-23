@@ -5,8 +5,8 @@ VideoDL.init = function()
 {
 	this.db = Titanium.Database.open("videodb");
 
-	this.contentArea = $('#content');
-
+	this.contentArea = $('#ytid');
+	//VideoDL.prototype.hide();
 	// Load all the topics
 	VideoDL.loadVideos();
 
@@ -15,6 +15,7 @@ VideoDL.init = function()
 VideoDL.loadVideos = function()
 {
 	this.videos = [];
+	
 
 	var vidapp = this;
 	
@@ -26,7 +27,7 @@ VideoDL.loadVideos = function()
 				$('#ytid').append(VideoDL.Video(vidjson[i].youtube_id));
 			};
 		};
-		
+		//VideoDL.prototype.show();
     };
 	xhr.open("GET", "http://freefallhighscore.heroku.com/videos.json");
 	xhr.send();
@@ -57,14 +58,21 @@ VideoDL.Video = function(youtube_id)
 
 }
 
+VideoDL.startTimer = function()
+{
+	setInterval(function() {
+		VideoDL.loadVideos();
+	},300000);
+}
+
 VideoDL.Video.prototype.show = function()
 {
-	this.contentDiv.show();
+	this.contentArea.fadeIn(1000);
 }
 
 VideoDL.Video.prototype.hide = function()
 {
-	this.contentDiv.hide();
+	this.contentArea.fadeOut(1000);
 }
 
 $(document).ready(function()
