@@ -1,3 +1,13 @@
+// 
+//  main.js
+//  FreeFallExhibition
+//  
+//  Created by Logan Best on 2011-08-27.
+//  Copyright 2011 Logan Best. All rights reserved.
+//
+//  Description: Creates all application menus, namely the config menu.
+// 
+
 var createMenuItem = Titanium.UI.createMenuItem;
 var createMenu = Titanium.UI.createMenu;
 
@@ -11,23 +21,3 @@ var configSubMenu = createMenu();
 	configMenu.getItemAt(0).setSubmenu(configSubMenu);
 	
 Titanium.UI.currentWindow.menu = configMenu;
-
-
-
-function smartColumns() { //Create a function that calculates the smart columns
-
-        //Reset column size to a 100% once view port has been adjusted
-	$("ul.columns").css({ 'width' : "100%"});
-
-	var colWrap = $("ul.columns").width(); //Get the width of row
-	var colNum = Math.floor(colWrap / 200); //Find how many columns of 200px can fit per row / then round it down to a whole number
-	var colFixed = Math.floor(colWrap / colNum); //Get the width of the row and divide it by the number of columns it can fit / then round it down to a whole number. This value will be the exact width of the re-adjusted column
-
-	$("ul.columns").css({ 'width' : colWrap}); //Set exact width of row in pixels instead of using % - Prevents cross-browser bugs that appear in certain view port resolutions.
-	$("ul.columns li").css({ 'width' : colFixed}); //Set exact width of the re-adjusted column	
-
-}	
-
-$(window).resize(function () { //Each time the viewport is adjusted/resized, execute the function
-	smartColumns();
-});

@@ -1,3 +1,13 @@
+// 
+//  FFFramework.js
+//  FreeFallExhibition
+//  
+//  Created by Logan Best on 2011-08-27.
+//  Copyright 2011 Logan Best. All rights reserved.
+//
+//  Description: The FreeFall Framework handles all application functionality.
+// 
+
 var FFFramework = {
 	
 	db: Titanium.Database.open("videodb"),
