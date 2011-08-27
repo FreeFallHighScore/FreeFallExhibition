@@ -6,7 +6,7 @@ var configMenu = createMenu();
 
 var configSubMenu = createMenu();
 	configSubMenu.appendItem(createMenuItem("Open Config", function(e) {
-	    VideoConfig.init();
+	    VideoConfig.openConfig();
 	}));
 	configMenu.getItemAt(0).setSubmenu(configSubMenu);
 	

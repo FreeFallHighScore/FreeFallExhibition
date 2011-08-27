@@ -5,9 +5,30 @@
 		<link rel="stylesheet" type="text/css" href="css/reset.css"/>
 		<link rel="stylesheet" type="text/css" href="css/config.css"/>
 		<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
-		<script type="text/javascript" src="js/config.js"></script>
+		<script type="text/javascript" src="js/FFFramework.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
-		<script type="text/javascript" src="js/video_dl.js"></script>
+		<script type="text/javascript">
+		$(document).ready(function() {
+				$("#vidWidth").keyup(function () {
+					var value = $(this).val();
+					value *= 1;
+					var valueHeight = Math.round((value/16)*10);
+					
+					FFFramework.vidHeight = valueHeight;
+					FFFramework.vidWidth = value;
+					
+					$('#vidHight').val(FFFramework.vidHeight);
+				}).keyup();
+				
+				$('#vidTimerInterval').val((FFFramework.TimerLength/1000));
+				
+				$('#vidTimerIntervalBtn').bind('click',function() {
+					FFFramework.TimerLength = ($('#vidTimerInterval').val()*1000);
+					alert(FFFramework.TimerLength);
+					FFFramework.restartTimer();
+				});
+			});
+		</script>
 		<title>Exhibition Configuration</title>
 	</head>
 	<body>
@@ -17,6 +38,15 @@
 					<label>
 						Video Size
 					</label>
+				</p>
+				<p>
+					W:<input type="text" id="vidWidth" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;H:<input id="vidHight" type="text" disabled />
+				</p>
+				<p>
+					<label>Update Interval (seconds)</label>
+				</p>
+				<p>
+					<input type="text" id="vidTimerInterval" value="" />&nbsp;&nbsp;<input type="button" value="Update" id="vidTimerIntervalBtn" />
 				</p>
 			</form>
 		</div>
