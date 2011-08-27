@@ -1,15 +1,14 @@
 var VideoConfig = {};
-var Tifs = {fs: Titanium.Filesystem};
 
 VideoConfig.init = function()
 {
-	this.db = Titanium.Database.open("videodb");
+	//this.db = Titanium.Database.open("videodb");
 	VideoConfig.openConfig();
-}
+};
 
 VideoConfig.openConfig = function()
 {
-	Titanium.UI.createWindow({
+	var configWindow = Titanium.UI.createWindow({
         id: "configWindow",
         url: "app://config.html",
         title: "Exhibition Configuration",
@@ -32,4 +31,6 @@ VideoConfig.openConfig = function()
         transparentBackground: false,
         transparency: false
     });
-}
+    
+    configWindow.open();
+};

@@ -1,8 +1,10 @@
 var VideoDL = {};
 var Tifs = {fs: Titanium.Filesystem};
+var videos = [];
 
 VideoDL.init = function()
 {
+	var vidapp = this;
 	this.db = Titanium.Database.open("videodb");
 
 	this.contentArea = $('#ytid');
@@ -14,20 +16,23 @@ VideoDL.init = function()
 
 VideoDL.loadVideos = function()
 {
-	this.videos = [];
-	
 
-	var vidapp = this;
-	
 	var xhr = Titanium.Network.createHTTPClient();
 	xhr.onload = function() {
+		VideoDL.startTimer();
 		var vidjson = JSON.parse(this.responseData);
-		for (var i=0; i < 9; i++) {
+		$.each(vidjson, function(i) {
 			if (vidjson[i].disabled === false) {
-				$('#ytid').append(VideoDL.Video(vidjson[i].youtube_id));
+				if($.inArray(vidjson[i].youtube_id,videos)) {
+					videos[i] = vidjson[i].youtube_id;
+				};
+				
 			};
-		};
-		//VideoDL.prototype.show();
+		});
+		
+		$.each(videos, function(i) {
+			$('#ytid').append(VideoDL.Video(videos[i]));
+		});
     };
 	xhr.open("GET", "http://freefallhighscore.heroku.com/videos.json");
 	xhr.send();
@@ -60,6 +65,10 @@ VideoDL.Video = function(youtube_id)
 
 VideoDL.startTimer = function()
 {
+	setTimeout(function() {
+		alert(videos[4]);
+	}, 2000);
+	
 	setInterval(function() {
 		VideoDL.loadVideos();
 	},300000);
@@ -74,8 +83,3 @@ VideoDL.Video.prototype.hide = function()
 {
 	this.contentArea.fadeOut(1000);
 }
-
-$(document).ready(function()
-{
-	VideoDL.init();
-});
