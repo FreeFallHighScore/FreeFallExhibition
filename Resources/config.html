@@ -33,8 +33,9 @@
 				
 				$('#vidTimerIntervalBtn').bind('click',function() {
 					FFFramework.TimerLength = ($('#vidTimerInterval').val()*1000);
+					//alert(FFFramework.TimerLength);
+					FFFramework.newTimer();
 					alert(FFFramework.TimerLength);
-					FFFramework.restartTimer();
 				});
 			});
 		</script>

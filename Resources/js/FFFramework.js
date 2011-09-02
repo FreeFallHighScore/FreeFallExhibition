@@ -16,6 +16,30 @@ var FFFramework = {
 	vidHeight: 333,
 	vidWidth: 540,
 	TimerLength: 300000,
+	vidTimer: null,
+	configWindow: Titanium.UI.createWindow({
+	        id: "configWindow",
+	        url: "app://config.html",
+	        title: "Exhibition Configuration",
+	        width: 500,
+	        minWidth: 500,
+	        maxWidth: 500,
+	        height: 500,
+	        minHeight: 500,
+	        maxHeight: 500,
+	        maximizable: false,
+	        minimizable: true,
+	        closeable: true,
+	        resizable: false,
+	        fullscreen: false,
+	        maximized: false,
+	        minimized: false,
+	        usingChrome: true,
+	        topMost: true,
+	        visible: true,
+	        transparentBackground: false,
+	        transparency: false
+	    }),
 	
 	init: function() {
 		FFFramework.loadVideos();
@@ -56,46 +80,22 @@ var FFFramework = {
 	},
 	
 	startTimer: function() {
-		setTimeout(function() {
+		setInterval(function() {
 			alert(FFFramework.videos[4]);
 		}, 2000);
 		
-		var vidTimer = setInterval(function() {
-							FFFramework.loadVideos();
-						},FFFramework.TimerLength);
+		FFFramework.vidTimer = setInterval(function() {
+						FFFramework.loadVideos();
+					},FFFramework.TimerLength);
 	},
 	
-	restartTimer: function() {
-		clearInterval(vidTimer);
+	newTimer: function() {
+		clearInterval(FFFramework.vidTimer);
 		FFFramework.startTimer();
 	},
 	
 	openConfig: function() {
-		var configWindow = Titanium.UI.createWindow({
-	        id: "configWindow",
-	        url: "app://config.html",
-	        title: "Exhibition Configuration",
-	        width: 500,
-	        minWidth: 500,
-	        maxWidth: 500,
-	        height: 500,
-	        minHeight: 500,
-	        maxHeight: 500,
-	        maximizable: false,
-	        minimizable: true,
-	        closeable: true,
-	        resizable: false,
-	        fullscreen: false,
-	        maximized: false,
-	        minimized: false,
-	        usingChrome: true,
-	        topMost: true,
-	        visible: true,
-	        transparentBackground: false,
-	        transparency: false
-	    });
-	    
-	    configWindow.open();
+	    FFFramework.configWindow.open();
 	}
 	
 };
