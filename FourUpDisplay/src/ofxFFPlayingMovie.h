@@ -17,6 +17,7 @@ class ofxFFPlayingMovie {
 	void playFile(string file);
 	void update();
 	void draw();
+	void setDrawRect(ofRectangle rect);
 	
 	ofxQTKitVideoPlayer* player;
 	ofRectangle currentDrawRect;

@@ -53,6 +53,17 @@ void testApp::draw(){
 		player[i]->draw();
 	}
 	
+	//debug
+	ofSetColor(255, 0, 0);
+	for(int i = 0; i <= numVideos; i++){
+		ofLine(0,			 1.0*i/numVideos * ofGetHeight(), 
+			   ofGetWidth(), 1.0*i/numVideos * ofGetHeight());
+		
+		ofLine(1.0*i/numVideos * ofGetWidth(), 0,
+			   1.0*i/numVideos * ofGetWidth(), ofGetHeight() );
+	}
+	ofSetColor(255);
+	
 //	player[0]->draw(ofGetWidth()/4-width/2,ofGetHeight()/2-height/2,width,height);
 //	player[1]->draw(ofGetWidth() - width - (ofGetWidth()/4-width/2),ofGetHeight()/2-height/2,width,height);	
 //	player[2]->draw(853,480,853,480);
@@ -90,7 +101,7 @@ void testApp::pickNewSet(){
 	if(ofRandomuf() > .8){
 		numVideos = (rand() % maxNumVideos) + 1;
 	}
-	
+	numVideos =4 ;
 	//select 4 new videos, ones that haven't been seen for a while
 	int currentSelections[numVideos];
 	for(int i = 0; i < numVideos; i++){
@@ -109,12 +120,12 @@ void testApp::pickNewSet(){
 					alreadySelected = true;
 				}
 			}
-			if(!alreadySelected && options[validIndex]->loopsAgoPlayed > 2){
+			if(!alreadySelected && options[validIndex]->loopsAgoPlayed > 1){
 				cout << "Accepting movie " << validIndex << " for " << options[validIndex]->file << endl;
 				break;
 			}
 
-		} while (tries++ < 1000);
+		} while (tries++ < 100);
 		
 		cout << "current file is " << player[v]->currentFile << " new file is " << options[validIndex]->file << endl;
 		
@@ -173,10 +184,10 @@ void testApp::pickNewSet(){
 		
 		int x = gridSpot%numVideos;
 		int y = gridSpot/numVideos;
-		int width = 1920/numVideos;
-		int height = 1080/numVideos;
-		
-		player[i]->currentDrawRect = ofRectangle(x*width, y*height, width, height);
+		int width = 1.0*ofGetWidth()/numVideos;
+		int height = 1.0*ofGetHeight()/numVideos;
+
+		player[i]->setDrawRect( ofRectangle(x*width, y*height, width, height) );
 	}
 	
 }
