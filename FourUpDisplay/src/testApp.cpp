@@ -53,6 +53,7 @@ void testApp::draw(){
 		player[i]->draw();
 	}
 	
+	/*
 	//debug
 	ofSetColor(255, 0, 0);
 	for(int i = 0; i <= numVideos; i++){
@@ -63,7 +64,7 @@ void testApp::draw(){
 			   1.0*i/numVideos * ofGetWidth(), ofGetHeight() );
 	}
 	ofSetColor(255);
-	
+	*/
 //	player[0]->draw(ofGetWidth()/4-width/2,ofGetHeight()/2-height/2,width,height);
 //	player[1]->draw(ofGetWidth() - width - (ofGetWidth()/4-width/2),ofGetHeight()/2-height/2,width,height);	
 //	player[2]->draw(853,480,853,480);
@@ -73,7 +74,7 @@ void testApp::draw(){
 
 void testApp::updateVideosFromXML(){
 	ofxXmlSettings videoDescription;
-	if(videoDescription.loadFile("videos.xml")){
+	if(videoDescription.loadFile("_videos.xml")){
 		videoDescription.pushTag("vids");
 		int numvids = videoDescription.getNumTags("video");
 		for(int i = 0; i < numvids; i++){
