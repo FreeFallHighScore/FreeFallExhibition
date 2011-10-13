@@ -26,11 +26,19 @@ class testApp : public ofBaseApp{
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
 		
+	
+	
 	ofxFFPlayingMovie* player[4];
 
 	void updateVideosFromXML();
 	void pickNewSet();
-	
+
+	int maxNumVideos;
 	int numVideos;
 	vector<VideoOption*> options;
+	
+	
+
+	
+	
 };

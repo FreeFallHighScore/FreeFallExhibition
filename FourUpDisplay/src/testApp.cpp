@@ -4,7 +4,10 @@
 //--------------------------------------------------------------
 void testApp::setup(){
 
-	numVideos = 2;
+	ofEnableAlphaBlending();
+	
+	maxNumVideos = 4;
+	numVideos = 1;
 	
 	ofSetFrameRate(30);
 	ofToggleFullscreen();
@@ -19,6 +22,7 @@ void testApp::setup(){
 //		player[i]->play();
 //	}
 	
+
 	updateVideosFromXML();
 	pickNewSet();
 	
@@ -45,9 +49,12 @@ void testApp::draw(){
 	int width = 853*.9;
 	int height = 480*.9;
 	
-	player[0]->draw(ofGetWidth()/4-width/2,ofGetHeight()/2-height/2,width,height);
-	player[1]->draw(ofGetWidth() - width - (ofGetWidth()/4-width/2),ofGetHeight()/2-height/2,width,height);
+	for(int i = 0; i < numVideos; i++){
+		player[i]->draw();
+	}
 	
+//	player[0]->draw(ofGetWidth()/4-width/2,ofGetHeight()/2-height/2,width,height);
+//	player[1]->draw(ofGetWidth() - width - (ofGetWidth()/4-width/2),ofGetHeight()/2-height/2,width,height);	
 //	player[2]->draw(853,480,853,480);
 //	player[3]->draw(0,480,853,480);
 	
@@ -78,6 +85,12 @@ void testApp::updateVideosFromXML(){
 }
 
 void testApp::pickNewSet(){
+	
+	//chance to change the number of videos
+	if(ofRandomuf() > .8){
+		numVideos = (rand() % maxNumVideos) + 1;
+	}
+	
 	//select 4 new videos, ones that haven't been seen for a while
 	int currentSelections[numVideos];
 	for(int i = 0; i < numVideos; i++){
@@ -96,7 +109,7 @@ void testApp::pickNewSet(){
 					alreadySelected = true;
 				}
 			}
-			if(!alreadySelected && options[validIndex]->loopsAgoPlayed > 1){
+			if(!alreadySelected && options[validIndex]->loopsAgoPlayed > 2){
 				cout << "Accepting movie " << validIndex << " for " << options[validIndex]->file << endl;
 				break;
 			}
@@ -104,8 +117,10 @@ void testApp::pickNewSet(){
 		} while (tries++ < 1000);
 		
 		cout << "current file is " << player[v]->currentFile << " new file is " << options[validIndex]->file << endl;
+		
 		currentSelections[v] = validIndex;
 		player[v]->playFile(options[validIndex]->file);
+		options[validIndex]->loopsAgoPlayed = 0;
 	}
 	
 	//update pick count
@@ -126,9 +141,44 @@ void testApp::pickNewSet(){
 		}
 	}
 	
+	int maxIndex;
+	float maxDropLength = 0;
 	for(int i = 0; i < numVideos; i++){
 		player[i]->calculatedStartTime = currentTime + maxBuildupTime - options[ currentSelections[i] ]->dropPoint;
+		float dropLength = player[i]->player->getDuration() - options[ currentSelections[i] ]->dropPoint;
+		if(dropLength > maxDropLength){
+			maxIndex = i;
+			maxDropLength = dropLength;
+		}
 	}
+	
+	//turn off sound
+	for(int i = 0; i < numVideos; i++){
+		player[i]->player->setVolume(0);
+	}
+	player[maxIndex]->player->setVolume(1);
+	
+	vector<bool> usedgridspots;
+	for(int i = 0; i < numVideos*numVideos; i++) {
+		usedgridspots.push_back(false);
+	}
+	
+	for(int i = 0; i < numVideos; i++){
+		int gridSpot;
+		do{
+			gridSpot = rand() % usedgridspots.size();
+		} while(usedgridspots[gridSpot]);
+		
+		usedgridspots[gridSpot] = true;
+		
+		int x = gridSpot%numVideos;
+		int y = gridSpot/numVideos;
+		int width = 1920/numVideos;
+		int height = 1080/numVideos;
+		
+		player[i]->currentDrawRect = ofRectangle(x*width, y*height, width, height);
+	}
+	
 }
 
 //--------------------------------------------------------------

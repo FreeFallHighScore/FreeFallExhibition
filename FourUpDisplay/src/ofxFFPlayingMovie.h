@@ -13,12 +13,14 @@
 #include "ofxQTKitVideoPlayer.h"
 
 class ofxFFPlayingMovie {
-	
   public:
-	ofxQTKitVideoPlayer* player;
 	void playFile(string file);
 	void update();
-	void draw(float x, float y, float width, float height);
+	void draw();
+	
+	ofxQTKitVideoPlayer* player;
+	ofRectangle currentDrawRect;
+	ofImage playbutton;
 	float calculatedStartTime;
 	bool triggeredPlay;
 	string currentFile;

@@ -13,6 +13,7 @@ void ofxFFPlayingMovie::playFile(string file){
 	player->setLoopState(false);
 	triggeredPlay = false;
 	currentFile = file;
+	playbutton.loadImage("youtube_play.png");
 }
 
 void ofxFFPlayingMovie::update(){
@@ -23,8 +24,12 @@ void ofxFFPlayingMovie::update(){
 	player->update();
 }
 
-void ofxFFPlayingMovie::draw(float x, float y, float width, float height){
+void ofxFFPlayingMovie::draw(){
 	if(triggeredPlay && player->isPlaying()){
-		player->draw(x,y,width,height);
+		player->draw(currentDrawRect);
+	}
+	if(!triggeredPlay){
+		playbutton.draw(currentDrawRect.x + currentDrawRect.width/2 - playbutton.getWidth()/2, 
+						currentDrawRect.y + currentDrawRect.height/2 - playbutton.getHeight()/2);
 	}
 }
