@@ -1,3 +1,14 @@
 dist
 tmp
 .DS_Store
+
+Debug*/
+Release*/
+build/
+*.app/
+.svn/
+*.perspectivev3
+*.pbxuser
+*.mode*
+*.xcworkspace
+xcuserdata/
